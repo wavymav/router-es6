@@ -1,11 +1,15 @@
 'use strict';
 
 const http = require('http');
+const url = require('url')
 
 // Router
 function router(req, res) {
-    console.log('Requested route: ' + req.url);
-    console.log('Request method: ' + req.method);
+    // parses th url into useable Url {}
+    let baseURI = url.parse(req.url, true);
+
+    console.log('Requested route: ', baseURI);
+    
     res.writeHead(200, {'Content-type' : 'text/html'});
     res.end('<h1>Hello Web</h1>')
 }
