@@ -31,7 +31,7 @@ let routes = {
                 body += data;
                 console.log(body.length);
 
-                // destroy connection if the body length is larger than 1MB
+                // destroy connection if the body length is larger than 62958
                 if (body.length > 62958) {
                     res.writeHead(413, {'Content-type': 'text/html'});
                     res.end('<h3>The content being uploaded exceeds the 1MB limit!</h3>');
