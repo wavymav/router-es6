@@ -2,6 +2,7 @@
 
 const http = require('http');
 const url = require('url');
+const qs = require('querystring');
 
 // Methods and routes
 let routes = {
@@ -20,7 +21,34 @@ let routes = {
         }
     },
     'POST': {
+        '/api/login': (req, res) => {
+            // declaring an empty string for incoming data
+            let body = '';
 
+            // getting the data
+            req.on('data', (data) => {
+                // concating data packets
+                body += data;
+                console.log(body.length);
+
+                // destroy connection if the body length is larger than 1MB
+                if (body.length > 62958) {
+                    res.writeHead(413, {'Content-type': 'text/html'});
+                    res.end('<h3>The content being uploaded exceeds the 1MB limit!</h3>');
+                    req.connection.destroy();
+                }
+            });
+
+            req.on('end', () => {
+                // parses the querystring to an object
+                let params = qs.parse(body);
+
+                // loging the key values
+                console.log('Username ', params['username']);
+                console.log('Password ', params['password']);
+                res.end();
+            });
+        }
     },
     'DNE': (req, res) => {
         res.writeHead(404);
