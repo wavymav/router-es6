@@ -34,7 +34,7 @@ let routes = {
                 // destroy connection if the body length is larger than 62958
                 if (body.length > 62958) {
                     res.writeHead(413, {'Content-type': 'text/html'});
-                    res.end('<h3>The content being uploaded exceeds the 1MB limit!</h3>');
+                    res.end('<h3>The content being uploaded exceeds the 0.062MB limit!</h3>');
                     req.connection.destroy();
                 }
             });
@@ -59,6 +59,7 @@ let routes = {
 // Router
 function router(req, res) {
     // parses the url into useable Url {}
+    // the second param for the parse method converts the query prop string to an {}
     let baseURI = url.parse(req.url, true);
 
     // stores the value of routes{} keys [request method & request path(route)]
